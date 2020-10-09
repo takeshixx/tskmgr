@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"os"
 	"os/user"
 
 	"github.com/takeshixx/tskmgr/internal/tasks"
@@ -36,8 +37,17 @@ func NewManager() (m *Manager, err error) {
 	if err != nil {
 		return
 	}
-	if err = m.LoadConfig(usr.HomeDir + "/.tskmgr.yml"); err != nil {
-		return
+	_, err = os.Stat(usr.HomeDir + "/.tskmgr.yml")
+	if err != nil {
+		// Config file does not exist. Set the
+		// default path for tasks.
+		m.Config = &Config{
+			TasksPath: usr.HomeDir + "/tasks",
+		}
+	} else {
+		if err = m.LoadConfig(usr.HomeDir + "/.tskmgr.yml"); err != nil {
+			return
+		}
 	}
 	if err = m.LoadTasks(); err != nil {
 		return

@@ -3,7 +3,6 @@ package manager
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 
@@ -12,9 +11,6 @@ import (
 
 // LoadConfig parses the configuration file.
 func (m *Manager) LoadConfig(cfgPath string) (err error) {
-	if _, err = os.Stat(cfgPath); err != nil {
-		return
-	}
 	cfgFile, err := ioutil.ReadFile(cfgPath)
 	if err != nil {
 		return
