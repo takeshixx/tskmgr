@@ -161,13 +161,25 @@ func (ui *UI) newMenu() {
 	ui.Menu.AddItem("Refresh", tcell.KeyF5, func() {
 		ui.updateUI()
 	})
+	ui.Menu.AddItem("Ranger", tcell.KeyF9, func() {
+		curTask, err := ui.getCurrentTask()
+		if err != nil {
+			ui.ShowError(err)
+			return
+		}
+		ui.App.Suspend(func() {
+			if err = ui.Manager.OpenTaskFiles(curTask); err != nil {
+				ui.ShowError(err)
+				return
+			}
+		})
+	})
 	ui.Menu.AddItem("VSCode", tcell.KeyF10, func() {
 		curTask, err := ui.getCurrentTask()
 		if err != nil {
 			ui.ShowError(err)
 			return
 		}
-		// TODO: instantly return when running vscode
 		if err = ui.Manager.OpenTaskVSCode(curTask); err != nil {
 			ui.ShowError(err)
 			return
