@@ -63,7 +63,6 @@ func NewUI() (ui *UI, err error) {
 
 	ui.App.SetRoot(ui.Pages, true)
 	ui.App.SetFocus(ui.TaskList)
-	ui.App.EnableMouse(true)
 	ui.registerKeyEvents()
 	ui.updateUI()
 	return
