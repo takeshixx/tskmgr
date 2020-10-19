@@ -63,7 +63,7 @@ func (m *Manager) safeTaskDescription(t *tasks.Task, path string) (err error) {
 		return
 	}
 	defer f.Close()
-	fileData := t.Title
+	fileData := "# " + t.Title
 	fileData += "\n\n"
 	fileData += t.Description
 	_, err = f.WriteString(fileData)
